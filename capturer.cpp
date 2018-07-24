@@ -21,7 +21,7 @@
 #include "opencv2/highgui/highgui.hpp"
 #include "opencv2/imgproc/imgproc.hpp"
 
-#define DBG
+//#define DBG
 
 using namespace std;
 using namespace cv;
@@ -261,7 +261,7 @@ int main(int argc , char *argv[])
 					
 						//cout << "\nMax - Min " << (max16bit - min16bit)<< endl;
 						double lamda = double(255) / double(max16bit - min16bit);
-						//cout << "\nLamda: " << lamda << endl;
+						//cout << "\nLamda: " << lamda << endl;feed
 
 						for(int i=0; i < FRAME_WIDTH; i++){
 							for(int j=0; j < FRAME_HEIGHT; j++){
