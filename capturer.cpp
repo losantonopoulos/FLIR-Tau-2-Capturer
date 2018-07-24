@@ -85,16 +85,17 @@ void callbackTauImage(TauRawBitmap& tauRawBitmap, void* caller){
 		return;
 	}
 
-    // locked scope
-	mutex_bmp_update.lock();
+    // Locked scope
+	if(mutex_bmp_update.try_lock()){
 
-	// remapping values
-	pTauRaw = tauRawBitmap.data;
-	memcpy(pOriginal , pTauRaw, FRAME_SIZE);
+		// remapping values
+		pTauRaw = tauRawBitmap.data;
+		memcpy(pOriginal , pTauRaw, FRAME_SIZE);
 
-	frame_num++;
+		frame_num++;
 
-	mutex_bmp_update.unlock();
+		mutex_bmp_update.unlock();
+	}
 }
 
 void Capture::capture()
@@ -108,8 +109,6 @@ void Capture::capture()
 
     // enable TLinear in high resolution on TauCores
     tGr->enableTLinearHighResolution();
-
-    //std::this_thread::sleep_for(std::chrono::milliseconds(6000));  
 }
 
 
@@ -230,6 +229,7 @@ int main(int argc , char *argv[])
 				if(frame_num > photo_old){
 					{
 						//std::lock_guard<std::mutex> guard(mutex_bmp_update);
+						mutex_bmp_update.lock();
 
 						photo_old = frame_num;
 
@@ -271,6 +271,8 @@ int main(int argc , char *argv[])
 		
 						// Saving RGB -> .png photo
 						imwrite(photo_RGB_name.str(), remapped);
+
+						mutex_bmp_update.unlock();
 					}
 				
 				}
