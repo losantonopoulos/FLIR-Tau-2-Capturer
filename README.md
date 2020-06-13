@@ -16,3 +16,9 @@ and for opencv3.4:
 ```shell_session
 $ make capturer_v2
 ```
+
+Excecute like so:
+```shell_session
+$ ./capturer    [OUTPUT]
+$ ./capturer_v2 [OUTPUT]
+```
