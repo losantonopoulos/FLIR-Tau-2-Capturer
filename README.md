@@ -4,7 +4,7 @@ In order to utilize the core of Tau 2, a grabber was used. The grabber accesses 
 This is an OpenCV 2.4 based approach that utilizes libthermalgrabber which can be found here, along with the thermal grabber:
 https://thermalcapture.com/thermalcapture-grabber-usb/
 
-_Install Instructions_ 
+__Install Instructions__ 
 For opencv2.4:
 ```shell_session
 $ make capturer 
@@ -13,7 +13,8 @@ For opencv3.4:
 ```shell_session
 $ make capturer_v2
 ```
-_Excecute:_
+__Excecute:__
+Simply run:
 ```shell_session
 $ ./capturer    [OUTPUT]
 $ ./capturer_v2 [OUTPUT]
