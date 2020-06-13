@@ -108,6 +108,12 @@ void Capture::capture()
     tGr->enableTLinearHighResolution();
 }
 
+void helpMenu()
+{
+	cout << "Usage: " << endl;
+	cout << "./capturer [OUTPUT] " << endl;
+	cout << "\nIf you don't specify output, current working directory will be used" << endl;
+}
 
 int main(int argc , char *argv[])
 {
@@ -121,13 +127,24 @@ int main(int argc , char *argv[])
 		free(file);
 		return -1;
 	}
-	
-	if(argv[1][strlen(argv[1])-1] == '/'){
-		strncpy(file,argv[1],strlen(argv[1])-1);
-		file[strlen(argv[1])-1] = '\0';
+
+	if(argc == 1){
+
+		strcpy(file,".");
+
 	}else{
-		strcpy(file,argv[1]);
+		
+		if(argv[1][strlen(argv[1])-1] == '/'){
+			strncpy(file,argv[1],strlen(argv[1])-1);
+			file[strlen(argv[1])-1] = '\0';
+		}else{
+			strcpy(file,argv[1]);
+		}
 	}
+	
+	
+	
+
 	
 	file_space.str(file);
 	
