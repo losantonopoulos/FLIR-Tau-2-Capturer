@@ -20,7 +20,7 @@ $ ./capturer 	[OUTPUT]
 ```
 If you only want to view the feed, simply run:
 ```shell_session
-$ ./viewer 	[OUTPUT]
+$ ./viewer
 ```
 
 The capturing software will continously monitor the available storage space, and will stop saving once no more free space is availabe.
