@@ -48,9 +48,6 @@ const int FRAME_SIZE	= FRAME_WIDTH * FRAME_HEIGHT * 2;
 unsigned char 		*pOriginal;	// Raw Mat pointer
 short unsigned int 	*pTauRaw;	// Bitmap pointer
 
-Mat feed;
-Mat remapped;
-
 class Capture
 {
 public:
@@ -203,9 +200,12 @@ int main(int argc , char *argv[])
 		free(file);
 		exit(1);
 	}
+
+	Mat feed, remapped, remapped_cm;
 	
 	feed		= Mat (FRAME_HEIGHT, FRAME_WIDTH, CV_16UC1);
 	remapped	= Mat (FRAME_HEIGHT, FRAME_WIDTH, CV_8U);
+	remapped_cm	= Mat (FRAME_HEIGHT, FRAME_WIDTH, CV_8UC3);
 
 	pOriginal = feed.data;
 
@@ -213,13 +213,15 @@ int main(int argc , char *argv[])
 	// Finalizing setting up directories
 	MY_DIR = current_date_dir.str();
 	std::cout << MY_DIR << std::endl;
+
+	bool view = true;
 		
 	std::cout << "main:" << std::endl;
 	{
 		Capture* c = new Capture();
 		c->capture();
 		
-		while(waitKey(50) != 1048603){ // ESC
+		while(waitKey(50) != 27){ // ESC
 		    try{
 				if(!storage_check()){
 					cerr << "\nOut of storage..." << endl;
@@ -272,6 +274,11 @@ int main(int argc , char *argv[])
 						// Saving RGB -> .png photo
 						imwrite(photo_RGB_name.str(), remapped);
 
+						if(view){
+							applyColorMap(remapped, remapped_cm, COLORMAP_TURBO); // COLORMAP_JET , COLORMAP_INFERNO
+							imshow("Feed", remapped_cm);
+						}
+
 						mutex_bmp_update.unlock();
 					}
 				
@@ -288,6 +295,7 @@ int main(int argc , char *argv[])
 	// free unused memory
 	feed.release();
 	remapped.release();
+	remapped_cm.release();
 
    return 0;
 }

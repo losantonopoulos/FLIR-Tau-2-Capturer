@@ -203,11 +203,11 @@ int main(int argc , char *argv[])
 		exit(1);
 	}
 
-	Mat feed, remapped, remapped_jet;
+	Mat feed, remapped, remapped_cm;
 	
-	feed		 = Mat (FRAME_HEIGHT, FRAME_WIDTH, CV_16UC1);
-	remapped	 = Mat (FRAME_HEIGHT, FRAME_WIDTH, CV_8U);
-	remapped_jet = Mat (FRAME_HEIGHT, FRAME_WIDTH, CV_8UC3);
+	feed		= Mat (FRAME_HEIGHT, FRAME_WIDTH, CV_16UC1);
+	remapped	= Mat (FRAME_HEIGHT, FRAME_WIDTH, CV_8U);
+	remapped_cm = Mat (FRAME_HEIGHT, FRAME_WIDTH, CV_8UC3);
 
 	pOriginal = feed.data;
 
@@ -223,7 +223,7 @@ int main(int argc , char *argv[])
 		Capture* c = new Capture();
 		c->capture();
 		
-		while(waitKey(50) != 1048603){ // ESC
+		while(waitKey(50) != 27){ // ESC
 		    try{
 				if(!storage_check()){
 					cerr << "\nOut of storage..." << endl;
@@ -277,8 +277,8 @@ int main(int argc , char *argv[])
 						imwrite(photo_RGB_name.str(), remapped);
 
 						if(view){
-							applyColorMap(remapped, remapped_jet, COLORMAP_JET);
-							imshow("Feed", remapped_jet);
+							applyColorMap(remapped, remapped_cm, COLORMAP_TURBO); // COLORMAP_JET , COLORMAP_INFERNO
+							imshow("Feed", remapped_cm);
 						}
 						
 
@@ -298,6 +298,7 @@ int main(int argc , char *argv[])
 	// free unused memory
 	feed.release();
 	remapped.release();
+	remapped_cm.release();
 
    return 0;
 }
